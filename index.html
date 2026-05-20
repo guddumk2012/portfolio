@@ -1,200 +1,535 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hinal Makwana — Data Science Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FDF6EE;
+      --blush: #F2A7A7;
+      --rose: #E8637A;
+      --warm-red: #C94040;
+      --gold: #E8C97A;
+      --soft-teal: #A8C5C1;
+      --charcoal: #2D2424;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+    h1,h2,h3,.serif { font-family: 'Playfair Display', serif; }
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    .italic-accent {
+      font-style: italic;
+      color: var(--rose);
+      background: #FDE8CC;
+      padding: 0 6px 2px;
+      border-radius: 4px;
+    }
+    .nav-pill {
+      background: #fff8f2;
+      border: 1.5px solid #f0ddd0;
+      border-radius: 999px;
+      padding: 8px 28px;
+      box-shadow: 0 2px 12px rgba(200,80,80,0.07);
+    }
+    nav a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--rose); }
+    .avatar-badge {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--warm-red);
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo {
+      border-radius: 1.5rem 1.5rem 3rem 1.2rem;
+      width: 100%;
+      height: 380px;
+      background: linear-gradient(135deg, #f2a7a7 0%, #e8c97a 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(200,60,60,0.12) 100%);
+    }
+    .top-rated-badge {
+      background: var(--gold);
+      color: var(--charcoal);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .top-rated-badge::before { content: '★'; color: var(--warm-red); }
+    .btn-primary {
+      background: var(--warm-red);
+      color: white;
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-block;
+      box-shadow: 0 3px 12px rgba(200,64,64,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,64,64,0.32); }
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid #ddd;
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--rose); color: var(--rose); }
+    .logo-bar span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #b0a0a0;
+    }
+    .skill-bar {
+      height: 7px;
+      border-radius: 999px;
+      background: #f0ddd0;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--rose), var(--warm-red));
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .input-field {
+      width: 100%;
+      background: #fff8f2;
+      border: 1.5px solid #e8d5cc;
+      border-radius: 0.8rem;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus { border-color: var(--rose); }
+    footer { background: var(--charcoal); color: #fff; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .section-title { position: relative; display: inline-block; }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+    }
+    .sparkle {
+      display: inline-block;
+      font-size: 1.1rem;
+      color: var(--gold);
+      animation: spin 3s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+    .wave { display: block; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 999px; }
+
+    /* Skill chip hover */
+    .skill-chip {
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: default;
+    }
+    .skill-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(200,64,64,0.18); }
+
+    /* Project card */
+    .project-card {
+      border-radius: 1.4rem;
+      overflow: hidden;
+      background: #fff8f2;
+      border: 1.5px solid #f0ddd0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(200,80,80,0.13); }
+  </style>
 </head>
+<body>
 
-<body class="bg-gray-900 text-white font-sans">
+<!-- ──────────────── HEADER ──────────────── -->
+<header class="sticky top-0 z-50 pt-4 pb-2 px-6" style="background: rgba(253,246,238,0.9); backdrop-filter: blur(12px);">
+  <div class="max-w-5xl mx-auto flex items-center justify-between">
+    <div class="avatar-badge">HM</div>
+    <nav class="nav-pill hidden md:flex gap-8">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="mailto:guddumk2012@gmail.com" class="btn-primary text-sm hidden md:inline-block">Hire Me</a>
+    <button onclick="document.getElementById('mob-menu').classList.toggle('hidden')" class="md:hidden p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mob-menu" class="hidden md:hidden mt-3 max-w-5xl mx-auto nav-pill flex-col gap-3 py-4 px-6">
+    <a href="#home" class="block py-1">Home</a>
+    <a href="#about" class="block py-1">About</a>
+    <a href="#skills" class="block py-1">Skills</a>
+    <a href="#projects" class="block py-1">Projects</a>
+    <a href="#contact" class="block py-1">Contact</a>
+  </div>
+</header>
 
-    <!-- Main Container -->
-    <div class="max-w-4xl mx-auto p-10">
-
-        <!-- Heading -->
-        <h1 class="text-5xl font-bold text-center text-purple-400 mb-10">
-            My Portfolio
-        </h1>
-
-        <!-- Intro Section -->
-        <section class="bg-gray-800 p-8 rounded-2xl shadow-lg mb-8">
-
-            <h2 class="text-3xl font-semibold mb-4">
-                Hi, My name is Hinal Makwana
-            </h2>
-
-            <p class="text-gray-300 leading-8 text-lg">
-                My name is Hinal, and I am a diploma student with a strong interest in technology and data science. I enjoy learning new skills, solving problems, and exploring how data can be used to create intelligent solutions. In the future, I hope to pursue a successful career in Data Science and continue working with AI/ML technologies.
-            </p>
-
-        </section>
-
-        <!-- Skills Section -->
-        <section class="bg-gray-800 p-8 rounded-2xl shadow-lg mb-8">
-
-            <h2 class="text-3xl font-semibold mb-6 text-purple-300">
-                My Skills
-            </h2>
-
-            <ul class="space-y-3 text-lg">
-                <li class="bg-purple-600 p-3 rounded-xl">HTML</li>
-                <li class="bg-purple-600 p-3 rounded-xl">C, C++</li>
-                <li class="bg-purple-600 p-3 rounded-xl">Java</li>
-                <li class="bg-purple-600 p-3 rounded-xl">Python (Basics)</li>
-            </ul>
-
-        </section>
-
-        <!-- Contact Section -->
-        <section class="bg-gray-800 p-8 rounded-2xl shadow-lg">
-
-            <h2 class="text-3xl font-semibold mb-6 text-purple-300">
-                Contact Me
-            </h2>
-
-            <!-- Contact Form -->
-            <form onsubmit="return validateForm()">
-
-                <!-- Name -->
-                <div class="mb-4">
-                    <label class="block mb-2 text-lg">Name</label>
-
-                    <input 
-                        id="name"
-                        type="text" 
-                        placeholder="Enter your name"
-                        class="w-full p-3 rounded-xl bg-gray-700 text-white outline-none"
-                    >
-                </div>
-
-                <!-- Email -->
-                <div class="mb-4">
-                    <label class="block mb-2 text-lg">Email</label>
-
-                    <input 
-                        id="email"
-                        type="email" 
-                        placeholder="Enter your email"
-                        class="w-full p-3 rounded-xl bg-gray-700 text-white outline-none"
-                    >
-                </div>
-
-                <!-- Message -->
-                <div class="mb-6">
-                    <label class="block mb-2 text-lg">Message</label>
-
-                    <textarea 
-                        id="message"
-                        placeholder="Enter your message"
-                        rows="5"
-                        class="w-full p-3 rounded-xl bg-gray-700 text-white outline-none"
-                    ></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <button 
-                    type="submit"
-                    class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-xl text-white font-semibold"
-                >
-                    Submit
-                </button>
-
-            </form>
-
-        </section>
-
+<!-- ──────────────── HERO ──────────────── -->
+<section id="home" class="max-w-5xl mx-auto px-6 pt-12 pb-16">
+  <div class="grid md:grid-cols-2 gap-10 items-center">
+    <div class="fade-up">
+      <span class="top-rated-badge mb-4 inline-flex">Diploma Student · Data Science</span>
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight mt-4" style="font-family:'Playfair Display',serif; color:var(--charcoal)">
+        Hi, I'm<br>
+        <span class="italic-accent">Hinal</span><br>
+        Makwana.
+      </h1>
+      <p class="mt-5 text-base leading-relaxed" style="color:#6b5555; max-width:380px;">
+        A passionate diploma student with a strong interest in <strong>Data Science & AI/ML</strong>. I love solving problems and building intelligent solutions with code.
+      </p>
+      <div class="flex gap-3 mt-8 flex-wrap">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="https://github.com/guddumk2012" target="_blank" class="btn-outline">GitHub Profile</a>
+      </div>
     </div>
-<!-- Social Links Section -->
-
-<section class="mt-10">
-
-    <h2 class="text-3xl font-semibold text-center text-purple-300 mb-6">
-        Connect With Me
-    </h2>
-
-    <div class="flex justify-center gap-6 flex-wrap">
-
-        <!-- Email Card -->
-        <a href="mailto:guddumk2012@gmail.com"
-           class="bg-gray-800 p-6 rounded-2xl shadow-lg w-60 text-center hover:bg-purple-600 transition">
-
-            <h3 class="text-2xl font-bold mb-2">Email</h3>
-
-            <p class="text-gray-300">
-                Contact me through email
-            </p>
-
-        </a>
-
-        <!-- GitHub Card -->
-        <a href="https://github.com/guddumk2012"
-           target="_blank"
-           class="bg-gray-800 p-6 rounded-2xl shadow-lg w-60 text-center hover:bg-purple-600 transition">
-
-            <h3 class="text-2xl font-bold mb-2">GitHub</h3>
-
-            <p class="text-gray-300">
-                View my projects
-            </p>
-
-        </a>
-
-        <!-- LinkedIn Card -->
-        <a href="https://linkedin.com/in/hinal-makwana-447192405"
-           target="_blank"
-           class="bg-gray-800 p-6 rounded-2xl shadow-lg w-60 text-center hover:bg-purple-600 transition">
-
-            <h3 class="text-2xl font-bold mb-2">LinkedIn</h3>
-
-            <p class="text-gray-300">
-                Connect professionally
-            </p>
-
-        </a>
-
+    <!-- Avatar block -->
+    <div class="fade-up delay-2 relative">
+      <div class="hero-photo">
+        <div class="text-center z-10 relative">
+          <img src="C:\Users\hinal\Downloads\Hinal.jpg.jpeg" alt="Hinal Makwana" style="width:160px;height:160px;border-radius:50%;object-fit:cover;border:4px solid white;box-shadow:0 8px 32px rgba(200,80,80,0.3);" />
+          <p class="mt-4 font-bold text-white text-lg" style="text-shadow:0 2px 8px rgba(0,0,0,0.3)">Code · Data · AI</p>
+        </div>
+      </div>
+      <div class="absolute -top-4 -right-4 w-12 h-12 rounded-full flex items-center justify-center text-xl" style="background:var(--gold);box-shadow:0 4px 16px rgba(232,201,122,0.5)">💡</div>
     </div>
+  </div>
 
+  <!-- Interests bar -->
+  <div class="mt-14 text-center fade-up delay-4">
+    <p class="text-xs tracking-widest uppercase mb-4" style="color:#b0a0a0">
+      <span class="sparkle mr-2">✦</span> Exploring & Learning <span class="sparkle ml-2">✦</span>
+    </p>
+    <div class="flex justify-center gap-10 flex-wrap" style="font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#b0a0a0">
+      <span>Data Science</span>
+      <span style="color:var(--rose)">Machine Learning</span>
+      <span>Python</span>
+      <span>AI Solutions</span>
+    </div>
+  </div>
 </section>
 
-    <!-- JavaScript Validation -->
-    <script>
+<!-- ──────────────── ABOUT ──────────────── -->
+<section id="about" class="py-16" style="background:#fff8f2">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Philosophy card -->
+      <div class="relative">
+        <div class="rounded-2xl p-8" style="background:linear-gradient(135deg,#fde8e8,#fdf3dc);border:1.5px solid #f0ddd0">
+          <div class="text-6xl mb-4">🎓</div>
+          <h3 class="text-2xl font-bold mb-3" style="font-family:'Playfair Display',serif">My Drive</h3>
+          <p class="text-sm leading-loose" style="color:#6b5555">
+            "I believe data has the power to change the world. Every line of code I write is a step toward understanding that power — and using it to build something meaningful."
+          </p>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-20 h-20 rounded-full" style="background:var(--rose);opacity:0.15;"></div>
+      </div>
+      <!-- Bio -->
+      <div>
+        <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--rose)">About Me</p>
+        <h2 class="text-4xl font-bold mb-5" style="font-family:'Playfair Display',serif">Turning <em>Data</em><br>into Insight</h2>
+        <p class="text-sm leading-loose mb-4" style="color:#6b5555">
+          My name is <strong>Hinal Makwana</strong> and I'm a diploma student with a strong passion for technology and data science. I enjoy learning new skills, solving complex problems, and exploring how data can power intelligent solutions.
+        </p>
+        <p class="text-sm leading-loose mb-6" style="color:#6b5555">
+          My goal is to build a successful career in Data Science and continue working with AI/ML technologies that make a real-world impact.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/guddumk2012" target="_blank" class="btn-primary text-sm">GitHub</a>
+          <a href="https://linkedin.com/in/hinal-makwana-447192405" target="_blank" class="btn-outline text-sm">LinkedIn</a>
+          <a href="mailto:guddumk2012@gmail.com" class="btn-outline text-sm">Email Me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function validateForm() {
+<!-- wave -->
+<svg class="wave w-full -my-1" style="color:#fff8f2" viewBox="0 0 1440 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
+</svg>
 
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let message = document.getElementById("message").value;
+<!-- ──────────────── SKILLS ──────────────── -->
+<section id="skills" class="py-16" style="background:linear-gradient(135deg,#fde8e8 0%,#fff8f2 50%,#fdf3dc 100%)">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--rose)">Expertise</p>
+      <h2 class="text-4xl font-bold section-title" style="font-family:'Playfair Display',serif">Skills & Languages</h2>
+    </div>
 
-            if(name === "") {
-                alert("Please enter your name");
-                return false;
-            }
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Skill bars -->
+      <div>
+        <h3 class="font-bold text-lg mb-6" style="font-family:'Playfair Display',serif">Proficiency</h3>
+        <div id="skill-bars" class="space-y-5">
+          <div>
+            <div class="flex justify-between mb-1 text-sm font-medium"><span>Python</span><span>70%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:0%" data-width="70%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1 text-sm font-medium"><span>HTML</span><span>85%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:0%" data-width="85%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1 text-sm font-medium"><span>C / C++</span><span>75%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:0%" data-width="75%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1 text-sm font-medium"><span>Java</span><span>65%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:0%" data-width="65%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1 text-sm font-medium"><span>Data Science / ML</span><span>60%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:0%" data-width="60%"></div></div>
+          </div>
+        </div>
+      </div>
 
-            if(email === "") {
-                alert("Please enter your email");
-                return false;
-            }
+      <!-- Chips + stats -->
+      <div>
+        <h3 class="font-bold text-lg mb-6" style="font-family:'Playfair Display',serif">Technologies & Interests</h3>
+        <div class="flex flex-wrap gap-3 mb-10">
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#fde8e8;color:var(--warm-red);border:1.5px solid #f2c0c0">Python</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#fdf3dc;color:#9a7800;border:1.5px solid #f0dda0">C / C++</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#e8f3f2;color:#356b65;border:1.5px solid #a8c5c1">Java</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#fde8e8;color:var(--warm-red);border:1.5px solid #f2c0c0">HTML</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#f3eefe;color:#6644bb;border:1.5px solid #d0bef8">Machine Learning</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#fdf3dc;color:#9a7800;border:1.5px solid #f0dda0">Data Science</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#e8f3f2;color:#356b65;border:1.5px solid #a8c5c1">AI / ML</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#fde8e8;color:var(--warm-red);border:1.5px solid #f2c0c0">Problem Solving</span>
+          <span class="skill-chip px-4 py-2 rounded-full text-sm font-semibold" style="background:#f3eefe;color:#6644bb;border:1.5px solid #d0bef8">Git / GitHub</span>
+        </div>
 
-            if(!email.includes("@")) {
-                alert("Please enter a valid email");
-                return false;
-            }
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4">
+          <div class="text-center p-4 rounded-xl" style="background:#fff8f2;border:1.5px solid #f0ddd0">
+            <div class="text-3xl font-bold" style="font-family:'Playfair Display',serif;color:var(--warm-red)">4+</div>
+            <div class="text-xs mt-1" style="color:#6b5555">Languages</div>
+          </div>
+          <div class="text-center p-4 rounded-xl" style="background:#fff8f2;border:1.5px solid #f0ddd0">
+            <div class="text-3xl font-bold" style="font-family:'Playfair Display',serif;color:var(--warm-red)">AI</div>
+            <div class="text-xs mt-1" style="color:#6b5555">Focus Area</div>
+          </div>
+          <div class="text-center p-4 rounded-xl" style="background:#fff8f2;border:1.5px solid #f0ddd0">
+            <div class="text-3xl font-bold" style="font-family:'Playfair Display',serif;color:var(--warm-red)">∞</div>
+            <div class="text-xs mt-1" style="color:#6b5555">Curiosity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            if(message === "") {
-                alert("Please enter your message");
-                return false;
-            }
+<!-- wave -->
+<svg class="wave w-full -my-1 rotate-180" style="color:#fff8f2" viewBox="0 0 1440 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
+</svg>
 
-            alert("Form submitted successfully!");
-            return true;
-        }
+<!-- ──────────────── PROJECTS ──────────────── -->
+<section id="projects" class="py-16" style="background:#fff8f2">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--rose)">My Work</p>
+      <h2 class="text-4xl font-bold section-title" style="font-family:'Playfair Display',serif">Projects</h2>
+    </div>
 
-    </script>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="project-card fade-up">
+        <div style="height:140px;background:linear-gradient(135deg,#f2a7a7,#c94040);display:flex;align-items:center;justify-content:center;font-size:3rem;">🌐</div>
+        <div class="p-5">
+          <span class="text-xs font-semibold uppercase tracking-widest" style="color:var(--rose)">Web</span>
+          <h3 class="text-lg font-bold mt-1 mb-2" style="font-family:'Playfair Display',serif">Portfolio Website</h3>
+          <p class="text-sm leading-relaxed mb-4" style="color:#6b5555">Personal portfolio built with HTML/CSS showcasing my skills, projects, and contact info.</p>
+          <a href="https://guddumk2012.github.io/portfolio/" target="_blank" class="btn-primary text-sm">Live Demo →</a>
+        </div>
+      </div>
 
+      <div class="project-card fade-up delay-1">
+        <div style="height:140px;background:linear-gradient(135deg,#a8c5c1,#e8c97a);display:flex;align-items:center;justify-content:center;font-size:3rem;">🤖</div>
+        <div class="p-5">
+          <span class="text-xs font-semibold uppercase tracking-widest" style="color:var(--rose)">AI / ML</span>
+          <h3 class="text-lg font-bold mt-1 mb-2" style="font-family:'Playfair Display',serif">ML Exploration</h3>
+          <p class="text-sm leading-relaxed mb-4" style="color:#6b5555">Experimenting with Python-based ML models to explore patterns in data and build predictive tools.</p>
+          <a href="https://github.com/guddumk2012" target="_blank" class="btn-primary text-sm">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up delay-2">
+        <div style="height:140px;background:linear-gradient(135deg,#f3eefe,#6644bb);display:flex;align-items:center;justify-content:center;font-size:3rem;">📊</div>
+        <div class="p-5">
+          <span class="text-xs font-semibold uppercase tracking-widest" style="color:var(--rose)">Data</span>
+          <h3 class="text-lg font-bold mt-1 mb-2" style="font-family:'Playfair Display',serif">Data Analysis</h3>
+          <p class="text-sm leading-relaxed mb-4" style="color:#6b5555">Solving real-world data problems using Python, exploring datasets to uncover meaningful insights.</p>
+          <a href="https://github.com/guddumk2012" target="_blank" class="btn-primary text-sm">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave w-full -my-1" style="color:#fff8f2" viewBox="0 0 1440 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
+</svg>
+
+<!-- ──────────────── CONTACT ──────────────── -->
+<section id="contact" class="py-16" style="background:var(--warm-red)">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold text-white" style="font-family:'Playfair Display',serif">Let's Connect!</h2>
+      <p class="mt-3 text-sm" style="color:rgba(255,255,255,0.8)">Got a project idea, opportunity, or just want to say hi? My inbox is open.</p>
+    </div>
+
+    <div class="rounded-2xl p-8 md:p-10" style="background:rgba(255,255,255,0.97);box-shadow:0 20px 60px rgba(100,20,20,0.25)">
+      <!-- Social quick links -->
+      <div class="flex flex-wrap gap-3 justify-center mb-8">
+        <a href="mailto:guddumk2012@gmail.com" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold" style="background:#fde8e8;color:var(--warm-red);border:1.5px solid #f2c0c0">
+          ✉️ guddumk2012@gmail.com
+        </a>
+        <a href="https://github.com/guddumk2012" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold" style="background:#f3eefe;color:#6644bb;border:1.5px solid #d0bef8">
+          🐙 github.com/guddumk2012
+        </a>
+        <a href="https://linkedin.com/in/hinal-makwana-447192405" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold" style="background:#e8f3f2;color:#356b65;border:1.5px solid #a8c5c1">
+          💼 LinkedIn Profile
+        </a>
+      </div>
+
+      <div class="border-t pt-6" style="border-color:#f0ddd0">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:#6b5555">Name</label>
+            <input type="text" placeholder="Your name" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:#6b5555">Email</label>
+            <input type="email" placeholder="your@email.com" class="input-field" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:#6b5555">Message</label>
+            <textarea rows="4" placeholder="Tell me about the opportunity or project…" class="input-field resize-none"></textarea>
+          </div>
+        </div>
+        <button class="btn-primary mt-6 w-full text-center text-base py-3" style="background:var(--warm-red)">
+          Send Message →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────── FOOTER ──────────────── -->
+<footer class="py-10 px-6">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-3">
+      <div class="avatar-badge">HM</div>
+      <div>
+        <p class="font-bold text-sm">Hinal Makwana</p>
+        <p class="text-xs" style="color:#a08080">Data Science · AI/ML Enthusiast</p>
+      </div>
+    </div>
+    <nav class="flex gap-6">
+      <a href="#home" class="text-sm" style="color:#a08080">Home</a>
+      <a href="#about" class="text-sm" style="color:#a08080">About</a>
+      <a href="#skills" class="text-sm" style="color:#a08080">Skills</a>
+      <a href="#projects" class="text-sm" style="color:#a08080">Projects</a>
+      <a href="#contact" class="text-sm" style="color:#a08080">Contact</a>
+    </nav>
+    <div class="flex gap-4">
+      <a href="https://github.com/guddumk2012" target="_blank" style="color:#a08080;transition:color 0.2s" onmouseover="this.style.color='#e8637a'" onmouseout="this.style.color='#a08080'" title="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/hinal-makwana-447192405" target="_blank" style="color:#a08080;transition:color 0.2s" onmouseover="this.style.color='#e8637a'" onmouseout="this.style.color='#a08080'" title="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href="mailto:guddumk2012@gmail.com" style="color:#a08080;transition:color 0.2s" onmouseover="this.style.color='#e8637a'" onmouseout="this.style.color='#a08080'" title="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+    </div>
+  </div>
+  <p class="text-center text-xs mt-8" style="color:#6b5555">© 2026 Hinal Makwana. All rights reserved.</p>
+</footer>
+
+<script>
+  // Animate skill bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width;
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const skillSection = document.getElementById('skill-bars');
+  if (skillSection) observer.observe(skillSection);
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('mob-menu')?.classList.add('hidden');
+      }
+    });
+  });
+</script>
 </body>
 </html>
-
